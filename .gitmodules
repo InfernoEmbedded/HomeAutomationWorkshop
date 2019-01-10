@@ -1,0 +1,3 @@
+[submodule "onewire-softdevice"]
+	path = onewire-softdevice
+	url = https://github.com/InfernoEmbedded/onewire-softdevice.git
