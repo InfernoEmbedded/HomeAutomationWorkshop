@@ -101,6 +101,30 @@ def main():
                             print('We didn\'t find a mac address! Aborting.')
                             sys.exit(1)
 
+                        # Did we get link?
+                        r = re.compile('.* qdisc .* state ([^ ]*) .*')
+                        m = r.match(command_output[idx])
+                        if m:
+                            if m.group(1) == 'DOWN':
+                                print('eth0 did not see link')
+                                boards[args.board]['saw_link'] = False
+                            else:
+                                boards[args.board]['saw_link'] = True
+                        else:
+                            print('We didn\'t find link state! Aborting.')
+                            sys.exit(1)
+
+                        # Ensure we managed a DHCP correctly, but only if
+                        # if we have link
+                        if boards[args.board]['saw_link']:
+                            r = re.compile('    inet ([^ ]+) .*')
+                            m = r.match(command_output[idx + 2])
+                            if m:
+                                boards[args.board]['got_address'] = True
+                            else:
+                                print('We didn\'t find an address! Aborting.')
+                                sys.exit(1)
+
                     print('------------------------------------------')
 
                 if len(COMMANDS) == 0:

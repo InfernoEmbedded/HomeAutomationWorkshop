@@ -1,5 +1,11 @@
 {
-    "1": {
-        "mac_address": "02:01:62:a1:01:a0"
+    "0": {
+        "got_address": true,
+        "mac_address": "02:01:62:a1:01:a0",
+        "saw_link": true
+    },
+    "noeth": {
+        "mac_address": "02:01:b5:bb:11:68",
+        "saw_link": false
     }
 }
