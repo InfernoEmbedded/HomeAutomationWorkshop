@@ -1,0 +1,148 @@
+{
+    "0": {
+        "got_address": true,
+        "ip_address": "10.0.1.160",
+        "mac_address": "02:01:62:a1:01:a0",
+        "one_wire_local_found": true,
+        "one_wire_remote_found": true,
+        "saw_link": true
+    },
+    "13": {
+        "got_address": true,
+        "ip_address": "10.0.1.109",
+        "mac_address": "02:01:06:6f:bc:9d",
+        "one_wire_local_found": true,
+        "one_wire_remote_found": false,
+        "saw_link": true
+    },
+    "14": {
+        "got_address": true,
+        "ip_address": "10.0.1.238",
+        "mac_address": "02:01:1d:3d:1c:9e",
+        "one_wire_local_found": true,
+        "one_wire_remote_found": true,
+        "saw_link": true
+    },
+    "15": {
+        "got_address": true,
+        "ip_address": "10.0.1.187",
+        "mac_address": "02:01:87:a4:91:a0",
+        "one_wire_local_found": true,
+        "one_wire_remote_found": true,
+        "saw_link": true
+    },
+    "16": {
+        "got_address": true,
+        "ip_address": "10.0.1.219",
+        "mac_address": "02:01:39:4f:47:55",
+        "one_wire_local_found": true,
+        "one_wire_remote_found": true,
+        "saw_link": true
+    },
+    "17": {
+        "got_address": true,
+        "ip_address": "10.0.1.140",
+        "mac_address": "02:01:e9:56:79:ae",
+        "one_wire_local_found": false,
+        "one_wire_remote_found": false,
+        "saw_link": true
+    },
+    "18": {
+        "got_address": true,
+        "ip_address": "10.0.1.111",
+        "mac_address": "02:01:3a:3e:59:de",
+        "one_wire_local_found": true,
+        "one_wire_remote_found": true,
+        "saw_link": true
+    },
+    "19": {
+        "got_address": true,
+        "ip_address": "10.0.1.201",
+        "mac_address": "02:01:12:93:95:ea",
+        "one_wire_local_found": true,
+        "one_wire_remote_found": true,
+        "saw_link": true
+    },
+    "20": {
+        "got_address": true,
+        "ip_address": "10.0.1.113",
+        "mac_address": "02:01:32:d1:57:84",
+        "one_wire_local_found": true,
+        "one_wire_remote_found": true,
+        "saw_link": true
+    },
+    "21": {
+        "got_address": true,
+        "ip_address": "10.0.1.217",
+        "mac_address": "02:01:3d:89:cf:4a",
+        "one_wire_local_found": true,
+        "one_wire_remote_found": true,
+        "saw_link": true
+    },
+    "22": {
+        "got_address": true,
+        "ip_address": "10.0.1.254",
+        "mac_address": "02:01:6b:b9:c1:f6",
+        "one_wire_local_found": true,
+        "one_wire_remote_found": true,
+        "saw_link": true
+    },
+    "23": {
+        "got_address": true,
+        "ip_address": "10.0.1.183",
+        "mac_address": "02:01:a8:61:38:f0",
+        "one_wire_local_found": true,
+        "one_wire_remote_found": true,
+        "saw_link": true
+    },
+    "24": {
+        "got_address": true,
+        "ip_address": "10.0.1.240",
+        "mac_address": "02:01:94:fa:35:82",
+        "one_wire_local_found": true,
+        "one_wire_remote_found": true,
+        "saw_link": true
+    },
+    "26": {
+        "got_address": true,
+        "ip_address": "10.0.1.158",
+        "mac_address": "02:01:49:6b:1b:08",
+        "one_wire_local_found": true,
+        "one_wire_remote_found": true,
+        "saw_link": true
+    },
+    "27": {
+        "got_address": true,
+        "ip_address": "10.0.1.181",
+        "mac_address": "02:01:3c:f1:d0:ac",
+        "one_wire_local_found": true,
+        "one_wire_remote_found": true,
+        "saw_link": true
+    },
+    "28": {
+        "got_address": true,
+        "ip_address": "10.0.1.174",
+        "mac_address": "02:01:92:bd:48:ab",
+        "saw_link": true
+    },
+    "29": {
+        "got_address": true,
+        "ip_address": "10.0.1.169",
+        "mac_address": "02:01:7a:9f:13:bd",
+        "one_wire_local_found": true,
+        "one_wire_remote_found": true,
+        "saw_link": true
+    },
+    "30": {
+        "got_address": true,
+        "ip_address": "10.0.1.185",
+        "mac_address": "02:01:f0:f2:9c:43",
+        "one_wire_local_found": true,
+        "one_wire_remote_found": true,
+        "saw_link": true
+    },
+    "noeth": {
+        "mac_address": "02:01:b5:bb:11:68",
+        "saw_link": false
+    }
+}
