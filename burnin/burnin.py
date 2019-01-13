@@ -88,11 +88,15 @@ def main():
                             boards[args.board]['one_wire_local_found'] = True
                         else:
                             boards[args.board]['one_wire_local_found'] = False
+                            print('Local 1-Wire device missing!')
+                            sys.exit(1)
 
                         if r.text.find('ED.') != -1:
                             boards[args.board]['one_wire_remote_found'] = True
                         else:
                             boards[args.board]['one_wire_remote_found'] = False
+                            print('Remote 1-Wire device missing!')
+                            sys.exit(1)
 
                         # And then ctrl-c
                         ser.write(b'\x03')
