@@ -1,7 +1,10 @@
 {
     "0": {
         "got_address": true,
+        "ip_address": "10.0.1.160",
         "mac_address": "02:01:62:a1:01:a0",
+        "one_wire_local_found": true,
+        "one_wire_remote_found": true,
         "saw_link": true
     },
     "noeth": {

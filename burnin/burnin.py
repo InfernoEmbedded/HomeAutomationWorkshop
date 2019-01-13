@@ -4,11 +4,13 @@ import argparse
 import json
 import os
 import re
+import requests
 import serial
 import sys
 
 
-COMMANDS = ['ip address']
+COMMANDS = ['ip address',
+            'sudo owhttpd --debug --i2c=/dev/i2c-0:18 -p 80']
 
 
 def index_of(lines, elem):
@@ -74,7 +76,30 @@ def main():
             print('[in>] %s' % buf)
 
             if len(buf) == 0:
-                send(ser, '')
+                if command:
+                    if command.startswith('sudo owhttpd '):
+                        # We can now talk to the HTTP server and check that
+                        # 1-Wire is working
+                        url = ('http://%s/uncached'
+                                % boards[args.board]['ip_address'])
+                        print('[req] %s' % url)
+                        r = requests.get(url)
+                        if r.text.find('28.') != -1:
+                            boards[args.board]['one_wire_local_found'] = True
+                        else:
+                            boards[args.board]['one_wire_local_found'] = False
+
+                        if r.text.find('ED.') != -1:
+                            boards[args.board]['one_wire_remote_found'] = True
+                        else:
+                            boards[args.board]['one_wire_remote_found'] = False
+
+                        # And then ctrl-c
+                        ser.write(b'\x03')
+
+                else:
+                    send(ser, '')
+
             elif buf.startswith('orangepiprime login:'):
                 send(ser, '%s' % args.username)
             elif buf.startswith('Password:'):
@@ -117,10 +142,11 @@ def main():
                         # Ensure we managed a DHCP correctly, but only if
                         # if we have link
                         if boards[args.board]['saw_link']:
-                            r = re.compile('    inet ([^ ]+) .*')
+                            r = re.compile('    inet ([^ ]+)/24 .*')
                             m = r.match(command_output[idx + 2])
                             if m:
                                 boards[args.board]['got_address'] = True
+                                boards[args.board]['ip_address'] = m.group(1)
                             else:
                                 print('We didn\'t find an address! Aborting.')
                                 sys.exit(1)
