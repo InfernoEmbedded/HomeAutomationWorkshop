@@ -1,0 +1,31 @@
+default-lease-time 3600;
+max-lease-time 7200;
+option domain-name-servers 8.8.8.8;
+ 
+# If this DHCP server is the official DHCP server for the local
+# network, the authoritative directive should be uncommented.
+authoritative;
+
+# Use this to send dhcp log messages to a different log file (you also
+# have to hack syslog.conf to complete the redirection).
+log-facility local7;
+
+# We are going to hand out 192.168.42.* to clients in the hope its not in use
+# on the uni network already.
+subnet 192.168.42.0 netmask 255.255.255.0 {
+  option routers 192.168.42.1;
+  option broadcast-address 192.168.42.255;
+
+  pool {
+    range 192.168.42.100 192.168.42.250;
+  }
+}
+
+group {
+{%- for host in hosts %}
+  host {{host.name}} {
+    hardware ethernet {{host.mac}};
+    fixed-address 192.168.42.{{host.ip}};
+  }
+{%- endfor %}
+}
