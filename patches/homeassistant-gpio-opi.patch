@@ -1,0 +1,314 @@
+diff --git a/homeassistant/components/binary_sensor/rpi_gpio.py b/homeassistant/components/binary_sensor/rpi_gpio.py
+index 2fe4e0766..e0e60f427 100644
+--- a/homeassistant/components/binary_sensor/rpi_gpio.py
++++ b/homeassistant/components/binary_sensor/rpi_gpio.py
+@@ -27,8 +27,10 @@ DEFAULT_PULL_MODE = 'UP'
+ 
+ DEPENDENCIES = ['rpi_gpio']
+ 
++# Note that pin numbers of Raspberry Pis are positive integers, but on
++# OrangePi are strings of the form "PA7".
+ _SENSORS_SCHEMA = vol.Schema({
+-    cv.positive_int: cv.string,
++    cv.string: cv.string,
+ })
+ 
+ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
+@@ -49,15 +51,16 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
+     ports = config.get('ports')
+     for port_num, port_name in ports.items():
+         binary_sensors.append(RPiGPIOBinarySensor(
+-            port_name, port_num, pull_mode, bouncetime, invert_logic))
++            hass, port_name, port_num, pull_mode, bouncetime, invert_logic))
+     add_entities(binary_sensors, True)
+ 
+ 
+ class RPiGPIOBinarySensor(BinarySensorDevice):
+     """Represent a binary sensor that uses Raspberry Pi GPIO."""
+ 
+-    def __init__(self, name, port, pull_mode, bouncetime, invert_logic):
++    def __init__(self, hass, name, port, pull_mode, bouncetime, invert_logic):
+         """Initialize the RPi binary sensor."""
++        self._hass = hass
+         self._name = name or DEVICE_DEFAULT_NAME
+         self._port = port
+         self._pull_mode = pull_mode
+@@ -65,14 +68,15 @@ class RPiGPIOBinarySensor(BinarySensorDevice):
+         self._invert_logic = invert_logic
+         self._state = None
+ 
+-        rpi_gpio.setup_input(self._port, self._pull_mode)
++        rpi_gpio.setup_input(self._hass, self._port, self._pull_mode)
+ 
+         def read_gpio(port):
+             """Read state from GPIO."""
+-            self._state = rpi_gpio.read_input(self._port)
++            self._state = rpi_gpio.read_input(self._hass, self._port)
+             self.schedule_update_ha_state()
+ 
+-        rpi_gpio.edge_detect(self._port, read_gpio, self._bouncetime)
++        rpi_gpio.edge_detect(self._hass, self._port, read_gpio,
++                             self._bouncetime)
+ 
+     @property
+     def should_poll(self):
+@@ -91,4 +95,4 @@ class RPiGPIOBinarySensor(BinarySensorDevice):
+ 
+     def update(self):
+         """Update the GPIO state."""
+-        self._state = rpi_gpio.read_input(self._port)
++        self._state = rpi_gpio.read_input(self._hass, self._port)
+diff --git a/homeassistant/components/cover/rpi_gpio.py b/homeassistant/components/cover/rpi_gpio.py
+index 828f5e8e0..084df71ca 100644
+--- a/homeassistant/components/cover/rpi_gpio.py
++++ b/homeassistant/components/cover/rpi_gpio.py
+@@ -65,17 +65,19 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
+ 
+     for cover in covers_conf:
+         covers.append(RPiGPIOCover(
+-            cover[CONF_NAME], cover[CONF_RELAY_PIN], cover[CONF_STATE_PIN],
+-            state_pull_mode, relay_time, invert_state, invert_relay))
++            hass, cover[CONF_NAME], cover[CONF_RELAY_PIN],
++            cover[CONF_STATE_PIN], state_pull_mode, relay_time,
++            invert_state, invert_relay))
+     add_entities(covers)
+ 
+ 
+ class RPiGPIOCover(CoverDevice):
+     """Representation of a Raspberry GPIO cover."""
+ 
+-    def __init__(self, name, relay_pin, state_pin, state_pull_mode,
++    def __init__(self, hass, name, relay_pin, state_pin, state_pull_mode,
+                  relay_time, invert_state, invert_relay):
+         """Initialize the cover."""
++        self._hass = hass
+         self._name = name
+         self._state = False
+         self._relay_pin = relay_pin
+@@ -84,9 +86,11 @@ class RPiGPIOCover(CoverDevice):
+         self._relay_time = relay_time
+         self._invert_state = invert_state
+         self._invert_relay = invert_relay
+-        rpi_gpio.setup_output(self._relay_pin)
+-        rpi_gpio.setup_input(self._state_pin, self._state_pull_mode)
+-        rpi_gpio.write_output(self._relay_pin, 0 if self._invert_relay else 1)
++        rpi_gpio.setup_output(self._hass, self._relay_pin)
++        rpi_gpio.setup_input(self._hass, self._state_pin,
++                             self._state_pull_mode)
++        rpi_gpio.write_output(self._hass, self._relay_pin,
++                              0 if self._invert_relay else 1)
+ 
+     @property
+     def name(self):
+@@ -95,7 +99,7 @@ class RPiGPIOCover(CoverDevice):
+ 
+     def update(self):
+         """Update the state of the cover."""
+-        self._state = rpi_gpio.read_input(self._state_pin)
++        self._state = rpi_gpio.read_input(self._hass, self._state_pin)
+ 
+     @property
+     def is_closed(self):
+@@ -104,9 +108,11 @@ class RPiGPIOCover(CoverDevice):
+ 
+     def _trigger(self):
+         """Trigger the cover."""
+-        rpi_gpio.write_output(self._relay_pin, 1 if self._invert_relay else 0)
++        rpi_gpio.write_output(self._hass, self._relay_pin,
++                              1 if self._invert_relay else 0)
+         sleep(self._relay_time)
+-        rpi_gpio.write_output(self._relay_pin, 0 if self._invert_relay else 1)
++        rpi_gpio.write_output(self._hass, self._relay_pin,
++                              0 if self._invert_relay else 1)
+ 
+     def close_cover(self, **kwargs):
+         """Close the cover."""
+diff --git a/homeassistant/components/rpi_gpio.py b/homeassistant/components/rpi_gpio.py
+index 5f52341f1..88b8e16f8 100644
+--- a/homeassistant/components/rpi_gpio.py
++++ b/homeassistant/components/rpi_gpio.py
+@@ -5,64 +5,100 @@ For more details about this component, please refer to the documentation at
+ https://home-assistant.io/components/rpi_gpio/
+ """
+ import logging
++import importlib
++
++import voluptuous as vol
+ 
+ from homeassistant.const import (
+     EVENT_HOMEASSISTANT_START, EVENT_HOMEASSISTANT_STOP)
++import homeassistant.helpers.config_validation as cv
+ 
+-REQUIREMENTS = ['RPi.GPIO==0.6.5']
++REQUIREMENTS = ['RPi.GPIO==0.6.5',
++                'OPi.GPIO==0.3.6']
+ 
+ _LOGGER = logging.getLogger(__name__)
+ 
++CONF_BOARD_FAMILY = 'board_family'
++
++DEFAULT_FAMILY = 'raspberry_pi'
++FAMILY_LIBRARIES = {'raspberry_pi': 'RPi.GPIO',
++                    'orange_pi': 'OPi.GPIO'}
++
+ DOMAIN = 'rpi_gpio'
++LIBRARY = 'gpio_library'
++
++CONFIG_SCHEMA = vol.Schema({
++    DOMAIN: vol.Schema({
++        vol.Optional(CONF_BOARD_FAMILY, default=DEFAULT_FAMILY): cv.string
++    }),
++}, extra=vol.ALLOW_EXTRA)
++
+ 
++class UnknownBoardFamily(Exception):
++    """board_family should be 'raspberry_pi' or 'orange_pi'."""
+ 
+-def setup(hass, config):
+-    """Set up the Raspberry PI GPIO component."""
+-    from RPi import GPIO  # pylint: disable=import-error
++    pass
++
++
++def setup(hass, base_config):
++    """Set up the GPIO component."""
++    hass.data[DOMAIN] = {}
++
++    config = base_config.get(DOMAIN)
++    family_name = config.get(CONF_BOARD_FAMILY, DEFAULT_FAMILY)
++    lib_name = FAMILY_LIBRARIES.get(family_name)
++    _LOGGER.info('Configured to use board family %s', family_name)
++    _LOGGER.info('Will use %s as GPIO library', lib_name)
++    if not lib_name:
++        raise UnknownBoardFamily('Unknown board family: %s'
++                                 % config.get(CONF_BOARD_FAMILY))
++    hass.data[DOMAIN][LIBRARY] = importlib.import_module(lib_name)
+ 
+     def cleanup_gpio(event):
+         """Stuff to do before stopping."""
+-        GPIO.cleanup()
++        hass.data[DOMAIN][LIBRARY].cleanup()
+ 
+     def prepare_gpio(event):
+         """Stuff to do when home assistant starts."""
+         hass.bus.listen_once(EVENT_HOMEASSISTANT_STOP, cleanup_gpio)
+ 
+     hass.bus.listen_once(EVENT_HOMEASSISTANT_START, prepare_gpio)
+-    GPIO.setmode(GPIO.BCM)
++
++    if family_name == 'orange_pi':
++        hass.data[DOMAIN][LIBRARY].setmode(hass.data[DOMAIN][LIBRARY].SUNXI)
++    else:
++        hass.data[DOMAIN][LIBRARY].setmode(hass.data[DOMAIN][LIBRARY].BCM)
++
+     return True
+ 
+ 
+-def setup_output(port):
++def setup_output(hass, port):
+     """Set up a GPIO as output."""
+-    from RPi import GPIO  # pylint: disable=import-error
+-    GPIO.setup(port, GPIO.OUT)
++    hass.data[DOMAIN][LIBRARY].setup(port, hass.data[DOMAIN][LIBRARY].OUT)
+ 
+ 
+-def setup_input(port, pull_mode):
++def setup_input(hass, port, pull_mode):
+     """Set up a GPIO as input."""
+-    from RPi import GPIO  # pylint: disable=import-error
+-    GPIO.setup(port, GPIO.IN,
+-               GPIO.PUD_DOWN if pull_mode == 'DOWN' else GPIO.PUD_UP)
++    pull_mode = (hass.data[DOMAIN][LIBRARY].PUD_DOWN if pull_mode == 'DOWN'
++                 else hass.data[DOMAIN][LIBRARY].PUD_UP)
++    hass.data[DOMAIN][LIBRARY].setup(
++        port, hass.data[DOMAIN][LIBRARY].IN, pull_mode)
+ 
+ 
+-def write_output(port, value):
++def write_output(hass, port, value):
+     """Write a value to a GPIO."""
+-    from RPi import GPIO  # pylint: disable=import-error
+-    GPIO.output(port, value)
++    hass.data[DOMAIN][LIBRARY].output(port, value)
+ 
+ 
+-def read_input(port):
++def read_input(hass, port):
+     """Read a value from a GPIO."""
+-    from RPi import GPIO  # pylint: disable=import-error
+-    return GPIO.input(port)
++    return hass.data[DOMAIN][LIBRARY].input(port)
+ 
+ 
+-def edge_detect(port, event_callback, bounce):
++def edge_detect(hass, port, event_callback, bounce):
+     """Add detection for RISING and FALLING events."""
+-    from RPi import GPIO  # pylint: disable=import-error
+-    GPIO.add_event_detect(
++    hass.data[DOMAIN][LIBRARY].add_event_detect(
+         port,
+-        GPIO.BOTH,
++        hass.data[DOMAIN][LIBRARY].BOTH,
+         callback=event_callback,
+         bouncetime=bounce)
+diff --git a/homeassistant/components/switch/rpi_gpio.py b/homeassistant/components/switch/rpi_gpio.py
+index 3dec1135e..5166e1896 100644
+--- a/homeassistant/components/switch/rpi_gpio.py
++++ b/homeassistant/components/switch/rpi_gpio.py
+@@ -24,8 +24,10 @@ CONF_INVERT_LOGIC = 'invert_logic'
+ 
+ DEFAULT_INVERT_LOGIC = False
+ 
++# Note that pin numbers of Raspberry Pis are positive integers, but on
++# OrangePi are strings of the form "PA7".
+ _SWITCHES_SCHEMA = vol.Schema({
+-    cv.positive_int: cv.string,
++    cv.string: cv.string,
+ })
+ 
+ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
+@@ -41,21 +43,23 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
+     switches = []
+     ports = config.get(CONF_PORTS)
+     for port, name in ports.items():
+-        switches.append(RPiGPIOSwitch(name, port, invert_logic))
++        switches.append(RPiGPIOSwitch(hass, name, port, invert_logic))
+     add_entities(switches)
+ 
+ 
+ class RPiGPIOSwitch(ToggleEntity):
+     """Representation of a  Raspberry Pi GPIO."""
+ 
+-    def __init__(self, name, port, invert_logic):
++    def __init__(self, hass, name, port, invert_logic):
+         """Initialize the pin."""
++        self._hass = hass
+         self._name = name or DEVICE_DEFAULT_NAME
+         self._port = port
+         self._invert_logic = invert_logic
+         self._state = False
+-        rpi_gpio.setup_output(self._port)
+-        rpi_gpio.write_output(self._port, 1 if self._invert_logic else 0)
++        rpi_gpio.setup_output(self._hass, self._port)
++        rpi_gpio.write_output(self._hass, self._port,
++                              1 if self._invert_logic else 0)
+ 
+     @property
+     def name(self):
+@@ -74,12 +78,14 @@ class RPiGPIOSwitch(ToggleEntity):
+ 
+     def turn_on(self, **kwargs):
+         """Turn the device on."""
+-        rpi_gpio.write_output(self._port, 0 if self._invert_logic else 1)
++        rpi_gpio.write_output(self._hass, self._port,
++                              0 if self._invert_logic else 1)
+         self._state = True
+         self.schedule_update_ha_state()
+ 
+     def turn_off(self, **kwargs):
+         """Turn the device off."""
+-        rpi_gpio.write_output(self._port, 1 if self._invert_logic else 0)
++        rpi_gpio.write_output(self._hass, self._port,
++                              1 if self._invert_logic else 0)
+         self._state = False
+         self.schedule_update_ha_state()
