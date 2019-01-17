@@ -1,3 +1,16 @@
+# Inventory
+Please take a moment to check that you have all the workshop pieces:
+- 24V Power Supply
+- Orange Pi Prime with microSD card and interface board
+- 1M Ethernet cable
+- Relay module
+- 433MHz radio modules
+- SWD Programmer (looks like a USB stick)
+- 16 Channel OneWire SSR/Switch board
+
+Before plugging in, please inspect your Orange Pi Prime.
+
+
 # Set up Home Assistant
 - Identify the IP address of your Orange Pi Prime. Use the number written on the ethernet port of your device to look up the IP address in infrastructure/dhcpd.conf
 - Point a web browser at http://#orange pi IP#:8123. You should be greeted with the Home Assistant user creation screen
@@ -16,8 +29,15 @@ To make life easier, lets first enable a few plugins to allow us to configure Ho
 ![Configurator config](images/configurator.png)
 - Finally hit "Start" to start the addon. You can view any log messages from the addon by clicking "refresh" in the log panel.
 
+## Install OWFS->MQTT Gateway
+Since this Addon is locally built, it takes about 15 minutes to install. Let's get it going early so that it will be available when you need it.
+
+- In a new tab, navigate to the Addon Store, click the refresh button in the top right, you should see a "Local Addons" section appear
+- Click on the OWFS->MQTT Bridge
+- Click Install
+
 ## Initial Home Assistant Configuration
-- Click on "Open Web UI" on the Configurator Addon. This will open the editor in a new tab.
+- Back in your original tab, click on "Open Web UI" on the Configurator Addon. This will open the editor in a new tab.
 ![Open Web UI](images/configurator-open-webui.png)
 - In the editor, click on the folder icon in the top left, and navigate to `configuration.yaml`
 - Remove the `introduction` section
@@ -45,7 +65,7 @@ This step will not be necessary one [Mikal Still's GPIO patches](https://github.
 - Start the Addon, this takes a little while, you can monitor progress by refreshing the log panel. The server is running when you see
 `Server listening on 0.0.0.0 port 22` in the logs
 - SSH into the machine `ssh hassio@#orange pi IP#`
-- Get a shell in the docker instance of Home Assistant `docker exec -it homeassisant bash`
+- Get a shell in the docker instance of Home Assistant `docker exec -it homeassistant bash`
 ```
 cd /tmp
 wget https://raw.githubusercontent.com/InfernoEmbedded/HomeAutomationWorkshop/master/patches/homeassistant-gpio-opi.patch
@@ -78,3 +98,23 @@ binary_sensor:
 ```
 - Save your changes and check the configuration
 - Reboot the machine by SSHing in and typing `reboot`
+
+ FIXME: More content here, connect relay, operate from the Web UI, observe switch state from web ui
+
+
+## Enable NodeRed
+NodeRed provides a graphical flow-based interface, which makes it easy to create complex automations. In this example, we will toggle the relay you
+connected earlier with the pushbutton on the interface board.
+
+Fixme: content here
+
+## Enable Mosquitto
+We will be using MQTT to interact with Home Assistant. While Home Assistant includes a cut-down MQTT broker, Mosquitto
+is more powerful, and has a couple of features that we requires.
+- Create a new user for MQTT interactions with One Wire devices (the Mosquitto Addon inherits the Home Assistant users). Go to Configuration, Users,
+then click on the yellow '+' at the bottom right to create a new user. Use "OneWire" as the name, and 'owfs' as the username. Select a password
+(you'll need it later, so remember it or store it in a password safe), then create the user.
+- Install the Mosquitto Addon under Official Addons
+- Start the Mosquitto Addon
+
+
