@@ -31,6 +31,12 @@ cd onewire-softdevice/toolchain
 ./build-arm.sh
 ```
 
+- Tell MBed where to find the source
+```
+mkdir -p ~/.mbed
+echo "MBED_OS_DIR=/path/to/onewire-softdevice/mbed-os" > ~/.mbed/.mbed
+```
+
 - Confirm you can build the firmware
 ```
 cd onewire-softdevice/devices/16_Channel_SSR_Driver/src/
