@@ -51,7 +51,7 @@ sudo pip install mbed-cli         # Install the mbed-cli
 If you get an error from that final pip command line like this:
 
 ```
-# pip install mbed-cli
+sudo pip install mbed-cli
 bash: /usr/bin/pip: No such file or directory
 ```
 
@@ -60,6 +60,7 @@ Ubuntu installs. You can fix this by doing this thing:
 
 ```
 echo "export PATH=\$PATH:/usr/local/bin" >> ~/.bashrc
+bash # i.e. start a new shell
 ```
 
 And now re-run the failed pip command.
@@ -96,28 +97,27 @@ Tell MBed where to find the source
 
 ```
 mkdir -p ~/.mbed
-echo "MBED_OS_DIR=/path/to/onewire-softdevice/mbed-os" > ~/.mbed/.mbed
+echo "MBED_OS_DIR=$(pwd)/../mbed-os" > ~/.mbed/.mbed
 ```
 
 Install mbed python requirements
 --------------------------------
 
-mbed wont use a virtualenv (its horrible, I know), so we have to pip install
+mbed wont use a virtualenv (it's horrible, I know), so we have to pip install
 into the system python a bunch of dependancies:
 
 ```
-cd onewire-softdevice/mbed-os
+cd ../mbed-os
 sudo pip install -r requirements.txt
 ```
 
 Confirm you can build the firmware
 ----------------------------------
 
-Activate the mbed virtualenv, and then try a compile.
+Now it's time to try a compile.
 
 ```
-workon mbed
-cd onewire-softdevice/devices/16_Channel_SSR_Driver/src/
+cd ../devices/16_Channel_SSR_Driver/src/
 ./build.sh
 ```
 
