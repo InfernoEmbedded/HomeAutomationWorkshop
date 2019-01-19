@@ -9,6 +9,7 @@ types).
 
 These instructions assume an x86-64 based Linux machine.
 
+
 stlink
 ------
 
@@ -18,15 +19,36 @@ flash new firmware onto our 1-Wire boards.
 
 On Fedora do this:
 
-```sudo dnf install stlink```
+```
+sudo dnf install stlink
+```
 
 For Ubuntu users, you need to be running at least Ubuntu Cosmic (18.10) for
 the stlink tools to be packaged.
 
-```sudo apt-get install stlink-tools```
+```
+sudo apt-get install stlink-tools
+```
 
 For other distributions you're a little more on your own. Build the STlink
 utilites from here: https://github.com/texane/stlink
+
+Mosquitto Clients
+-----------------
+
+We will use the Mosquitto clients to manually interact with Home Assistant
+via MQTT.
+
+Fedora:
+```
+sudo dnf install mosquitto
+```
+
+Ubuntu:
+```
+sudo apt-get install mosquitto-clients
+```
+
 
 MBED CLI
 --------
@@ -64,6 +86,7 @@ bash # i.e. start a new shell
 ```
 
 And now re-run the failed pip command.
+
 
 Fetch git module and submodules
 -------------------------------
@@ -145,7 +168,7 @@ ImportError: No module named builtins
 ```
 
 Then you probably failed to install the python dependancies into the system
-python. Try that bit again. A successful build will end with soemthing like:
+python. Try that bit again. A successful build will end with something like:
 
 ```
 Link: 16ChannelSSR
