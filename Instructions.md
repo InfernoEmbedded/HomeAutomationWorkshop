@@ -40,8 +40,7 @@ To make life easier, lets first enable a few plugins to allow us to configure Ho
 - Finally hit "Start" to start the addon. You can view any log messages from the addon by clicking "refresh" in the log panel.
 
 ## Install OWFS->MQTT Gateway
-Since this Addon is locally built, it takes about 15 minutes to install. Let's get it going early so that it will be available when you need it.
-
+You don't need to install this anymore, it's been seeded in the image:
 - In a new tab, navigate to the Addon Store, click the refresh button in the top right, you should see a "Local Addons" section appear
 - Click on the OWFS->MQTT Bridge
 - Click Install
@@ -63,7 +62,7 @@ You may not be able to copy/paste this, so you'll have to type it in.
 ![Home Assistant Check Config](images/check_config.png)
 
 ## Patch GPIO code for the Orange Pi
-This step will not be necessary ocne [Mikal Still's GPIO patches](https://github.com/home-assistant/home-assistant/pull/19732) have been merged.
+This step will not be necessary once [Mikal Still's GPIO patches](https://github.com/home-assistant/home-assistant/pull/19732) have been merged.
 
 - In the Addon Store, under Community Hass.IO Addons, install "SSH and Web Terminal"
 - The SSH daemon authenticates via your public key. If you don't have one generated already, build one new with `ssh-keygen`
@@ -113,7 +112,7 @@ binary_sensor:
    ports:
      PA6: Pushbutton
 ```
-- Check on your OWFS->MQTT Gatweay install, if it's still going, wait here before you restart Home Assistant.
+- Check on your OWFS->MQTT Gateway install, if it's still going, wait here before you restart Home Assistant.
 - Save your changes, check the configuration then restart Home Assistant
 - You should now see Relay1 in the list of devices in the overview, and Pushbutton as a sensor at the top of the overview.
 
@@ -151,7 +150,7 @@ right entity.
 - Change the Entity Match Type to exact
 - Click on Done
 
-You now have a node in your flow that generates messages whenever the button is pressed, lets investigate...
+You now have a node in your flow that generates messages whenever the button is pressed, let's investigate...
 - Drag an Output "Debug" node to the right of your Pushbutton node
 - Click and drag on the connection points between the 2 nodes to connect them
 ![Connected Nodes](images/connected_nodes.png)
@@ -161,7 +160,7 @@ You now have a node in your flow that generates messages whenever the button is 
 - Double click the debug node, then change output to "complete msg object"
 - Deploy your changes and press the button, you should now see more information about the message
 
-Now lets connect you relay into the flow.
+Now let's connect you relay into the flow.
 - Drag a Home Assistant "Call Service" node into the flow and configure it:
     - Name: Relay
     - Domain: switch
@@ -242,7 +241,7 @@ outputs). Since this workshop does not involve soldering, we will instead patch 
 - Disconnect the relay from the interface board
 - Using a pin or other small tool, gently lift the locking tab and free the black wire from the connector.
 - Plug the black wire into a Gnd pin on the the SSR board (Top row of the IO header)
-- Plug the yellow wire into Port 0 Channel 0 on the SSR board (bottow row of the IO header)
+- Plug the yellow wire into Port 0 Channel 0 on the SSR board (bottom row of the IO header)
 - Plug the red wire into the 3.3V pin (pin 1) on the programming header
 ![SSR Board Relay Connections](images/ssr_relay_connections.jpg)
 
