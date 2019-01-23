@@ -67,9 +67,9 @@ This step will not be necessary once [Mikal Still's GPIO patches](https://github
 - In the Addon Store, under Community Hass.IO Addons, install "SSH and Web Terminal"
 - The SSH daemon authenticates via your public key. If you don't have one generated already, build one new with `ssh-keygen`
 - Copy you SSH public key into your clipboard: `cat ~/.ssh/id_rsa.pub` (then copy the output)
-- Add your SSH key to the "authorized_keys" list, and disable the web interface (since you can SSH in directly from your laptop).
+- Add your SSH key to the "authorized_keys" list, and disable the web interface (since you can SSH in directly from your laptop). It is disabled by default on the sdcard we got   
 ![SSH Key config](images/ssh-key.png)
-- Disable the Protection Mode option on the addon
+- Disable the Protection Mode option on the addon (it is already disabled by default)  
 ![SSH Disable Protection](images/ssh-disable-protection.png)
 - Start the Addon, this takes a little while, you can monitor progress by refreshing the log panel. The server is running when you see
 `Server listening on 0.0.0.0 port 22` in the logs
