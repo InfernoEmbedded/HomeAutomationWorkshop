@@ -73,7 +73,7 @@ This step will not be necessary ocne [Mikal Still's GPIO patches](https://github
 - Disable the Protection Mode option on the addon (it is already disabled by default)  
 ![SSH Disable Protection](images/ssh-disable-protection.png)
 - Start the Addon, this takes a little while, you can monitor progress by refreshing the log panel. The server is running when you see
-`Server listening on 0.0.0.0 port 22` in the logs
+`Server listening on 0.0.0.0 port 22` in the logs. Note this takes a very long time (2mn or more)  
 - SSH into the machine `ssh hassio@#orange pi IP#`
 - Get a shell in the docker instance of Home Assistant `docker exec -it homeassistant bash`
 ```
