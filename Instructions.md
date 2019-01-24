@@ -39,12 +39,6 @@ To make life easier, lets first enable a few plugins to allow us to configure Ho
 ![Configurator config](images/configurator.png)
 - Finally hit "Start" to start the addon. You can view any log messages from the addon by clicking "refresh" in the log panel.
 
-## Install OWFS->MQTT Gateway
-You don't need to install this anymore, it's been seeded in the image:
-- In a new tab, navigate to the Addon Store, click the refresh button in the top right, you should see a "Local Addons" section appear
-- Click on the OWFS->MQTT Bridge
-- Click Install
-
 ## Initial Home Assistant Configuration
 - Back in your original tab, click on "Open Web UI" on the Configurator Addon. This will open the editor in a new tab.
 ![Open Web UI](images/configurator-open-webui.png)
@@ -198,6 +192,11 @@ then click on the yellow '+' at the bottom right to create a new user. Use "OneW
 - Start the Mosquitto Addon
 - Go back to the Overview page, you should see a 'New Devices Discovered' panel, follow the "check it out" link (if not, navigate to /config/integrations)
 - Click Configure next to MQTT, then select 'Enable Discovery'
+
+## Install OWFS->MQTT Gateway
+- In a new tab, navigate to the Addon Store, click the refresh button in the top right, you should see a "Local Addons" section appear
+- Click on the OWFS->MQTT Gateway
+- Click Install
 
 ## Configure the Gateway
 - Navigate to the OWFS->MQTT Gateway page under HassIO (it should be installed by now)
