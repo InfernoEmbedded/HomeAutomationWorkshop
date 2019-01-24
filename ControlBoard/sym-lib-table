@@ -30,4 +30,5 @@
   (lib (name maxim)(type Legacy)(uri ${KIPRJMOD}/libraries/maxim.lib)(options "")(descr ""))
   (lib (name DS9503)(type Legacy)(uri ${KIPRJMOD}/libraries/DS9503.lib)(options "")(descr ""))
   (lib (name SMF05C)(type Legacy)(uri A:/1wire/kicad_libs/SMF05C.lib)(options "")(descr ""))
+  (lib (name ControlBoard-rescue)(type Legacy)(uri ${KIPRJMOD}/ControlBoard-rescue.lib)(options "")(descr ""))
 )

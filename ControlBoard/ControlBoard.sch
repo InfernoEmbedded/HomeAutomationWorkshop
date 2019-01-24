@@ -6,8 +6,8 @@ $Descr A3 16535 11693
 encoding utf-8
 Sheet 1 2
 Title "1Wire Master Control Board"
-Date "2018-11-14"
-Rev "1.1"
+Date "2019-01-24"
+Rev "1.2"
 Comp "Inferno Embedded"
 Comment1 ""
 Comment2 ""
@@ -21,7 +21,7 @@ F0 "PowerSupply" 60
 F1 "PowerSupply.sch" 60
 $EndSheet
 $Comp
-L OrangePi:OrangePiPrime J1
+L ControlBoard-rescue:OrangePiPrime-OrangePi J1
 U 2 1 5947F75D
 P 12850 2300
 F 0 "J1" H 13750 3400 60  0000 C CNN
@@ -36,7 +36,7 @@ SDA
 Text Label 14750 1500 0    60   ~ 0
 SCL
 $Comp
-L OrangePi:OrangePiPrime J1
+L ControlBoard-rescue:OrangePiPrime-OrangePi J1
 U 5 1 5BD83752
 P 3200 4100
 F 0 "J1" H 3725 5337 60  0000 C CNN
@@ -47,7 +47,7 @@ F 3 "" H 3200 4100 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L conn:CONN_02X03 J5
+L ControlBoard-rescue:CONN_02X03-conn J5
 U 1 1 5BD85842
 P 14000 3700
 F 0 "J5" H 14000 4015 50  0000 C CNN
@@ -144,7 +144,7 @@ SDA
 Text Label 9750 2550 0    50   ~ 0
 SCL
 $Comp
-L conn:RJ45 J4
+L ControlBoard-rescue:RJ45-conn J4
 U 1 1 5BD86ACF
 P 11800 1350
 F 0 "J4" H 11876 1967 50  0000 C CNN
@@ -347,7 +347,7 @@ $EndComp
 Wire Wire Line
 	4950 1250 4950 1400
 $Comp
-L conn:CONN_02X10 J3
+L ControlBoard-rescue:CONN_02X10-conn J3
 U 1 1 5BD91820
 P 6900 3800
 F 0 "J3" H 6900 4465 50  0000 C CNN
@@ -467,7 +467,7 @@ Connection ~ 7200 3450
 Wire Wire Line
 	7200 3450 7200 3350
 $Comp
-L conn:CONN_01X10 J2
+L ControlBoard-rescue:CONN_01X10-conn J2
 U 1 1 5BDB5D77
 P 5250 3950
 F 0 "J2" H 5328 3991 50  0000 L CNN
@@ -542,7 +542,7 @@ RF_TX
 Text Label 2650 3300 0    50   ~ 0
 RF_RX
 $Comp
-L conn:CONN_01X03 J6
+L ControlBoard-rescue:CONN_01X03-conn J6
 U 1 1 5BE1D465
 P 5000 5900
 F 0 "J6" H 5078 5941 50  0000 L CNN
@@ -576,7 +576,7 @@ Wire Wire Line
 Wire Wire Line
 	4400 5900 4800 5900
 $Comp
-L conn:CONN_01X04 J7
+L ControlBoard-rescue:CONN_01X04-conn J7
 U 1 1 5BE38D00
 P 6200 5900
 F 0 "J7" H 6278 5941 50  0000 L CNN
@@ -643,7 +643,7 @@ L Device:R R5
 U 1 1 5BE44B6F
 P 5600 6400
 F 0 "R5" H 5670 6446 50  0000 L CNN
-F 1 "16k" H 5670 6355 50  0000 L CNN
+F 1 "10k" H 5670 6355 50  0000 L CNN
 F 2 "Resistors_SMD:R_0603" V 5530 6400 50  0001 C CNN
 F 3 "~" H 5600 6400 50  0001 C CNN
 	1    5600 6400
@@ -712,7 +712,7 @@ Wire Wire Line
 Wire Wire Line
 	12600 1900 12150 1900
 $Comp
-L SMF05C:SMF05C D1
+L ControlBoard-rescue:SMF05C-SMF05C D1
 U 1 1 5BD49D18
 P 9300 1150
 F 0 "D1" H 8866 1146 50  0000 R CNN
@@ -767,8 +767,8 @@ L Diode:1.5KExxA D2
 U 1 1 5BD57B58
 P 10200 1100
 F 0 "D2" V 10154 1179 50  0000 L CNN
-F 1 "P6KE24A" V 10245 1179 50  0000 L CNN
-F 2 "Diodes_ThroughHole:D_DO-15_P12.70mm_Horizontal" H 10200 900 50  0001 C CNN
+F 1 "ZMM24V" V 10245 1179 50  0000 L CNN
+F 2 "Diode_SMD:D_MiniMELF" H 10200 900 50  0001 C CNN
 F 3 "https://www.vishay.com/docs/88301/15ke.pdf" H 10150 1100 50  0001 C CNN
 	1    10200 1100
 	0    1    1    0   
@@ -795,50 +795,33 @@ F 3 "" H 10200 950 50  0001 C CNN
 	1    10200 950 
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	4450 3700 4600 3700
-Wire Wire Line
-	4600 3700 4600 1950
-Wire Wire Line
-	4600 1950 4950 1950
 $Comp
-L power:+5V #PWR0112
-U 1 1 5BEC5D7C
-P 7200 3200
-F 0 "#PWR0112" H 7200 3050 50  0001 C CNN
-F 1 "+5V" H 7215 3373 50  0000 C CNN
-F 2 "" H 7200 3200 50  0001 C CNN
-F 3 "" H 7200 3200 50  0001 C CNN
-	1    7200 3200
-	1    0    0    -1  
-$EndComp
-$Comp
-L Jumper:SolderJumper_3_Bridged12 JP?
+L Jumper:SolderJumper_3_Bridged12 JP1
 U 1 1 5BECD6B8
 P 9450 2750
-F 0 "JP?" V 9496 2818 50  0000 L CNN
+F 0 "JP1" V 9496 2818 50  0000 L CNN
 F 1 "SolderJumper_3_Bridged12" V 9405 2818 50  0000 L CNN
-F 2 "" H 9450 2750 50  0001 C CNN
+F 2 "Jumper:SolderJumper-3_P1.3mm_Bridged12_RoundedPad1.0x1.5mm" H 9450 2750 50  0001 C CNN
 F 3 "~" H 9450 2750 50  0001 C CNN
 	1    9450 2750
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Jumper:SolderJumper_3_Bridged12 JP?
+L Jumper:SolderJumper_3_Bridged12 JP2
 U 1 1 5BECD88E
 P 9450 3650
-F 0 "JP?" V 9496 3718 50  0000 L CNN
+F 0 "JP2" V 9496 3718 50  0000 L CNN
 F 1 "SolderJumper_3_Bridged12" V 9405 3718 50  0000 L CNN
-F 2 "" H 9450 3650 50  0001 C CNN
+F 2 "Jumper:SolderJumper-3_P1.3mm_Bridged12_RoundedPad1.0x1.5mm" H 9450 3650 50  0001 C CNN
 F 3 "~" H 9450 3650 50  0001 C CNN
 	1    9450 3650
 	0    -1   -1   0   
 $EndComp
 $Comp
-L power:+3.3V #PWR?
+L power:+3.3V #PWR0113
 U 1 1 5BECD8D4
 P 9450 2550
-F 0 "#PWR?" H 9450 2400 50  0001 C CNN
+F 0 "#PWR0113" H 9450 2400 50  0001 C CNN
 F 1 "+3.3V" H 9465 2723 50  0000 C CNN
 F 2 "" H 9450 2550 50  0001 C CNN
 F 3 "" H 9450 2550 50  0001 C CNN
@@ -846,10 +829,10 @@ F 3 "" H 9450 2550 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:+3.3V #PWR?
+L power:+3.3V #PWR0114
 U 1 1 5BED4788
 P 9450 3450
-F 0 "#PWR?" H 9450 3300 50  0001 C CNN
+F 0 "#PWR0114" H 9450 3300 50  0001 C CNN
 F 1 "+3.3V" H 9465 3623 50  0000 C CNN
 F 2 "" H 9450 3450 50  0001 C CNN
 F 3 "" H 9450 3450 50  0001 C CNN
@@ -857,10 +840,10 @@ F 3 "" H 9450 3450 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR?
+L power:GND #PWR0115
 U 1 1 5BED47BF
 P 9450 2950
-F 0 "#PWR?" H 9450 2700 50  0001 C CNN
+F 0 "#PWR0115" H 9450 2700 50  0001 C CNN
 F 1 "GND" H 9455 2777 50  0000 C CNN
 F 2 "" H 9450 2950 50  0001 C CNN
 F 3 "" H 9450 2950 50  0001 C CNN
@@ -868,10 +851,10 @@ F 3 "" H 9450 2950 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR?
+L power:GND #PWR0116
 U 1 1 5BED4894
 P 9450 3850
-F 0 "#PWR?" H 9450 3600 50  0001 C CNN
+F 0 "#PWR0116" H 9450 3600 50  0001 C CNN
 F 1 "GND" H 9455 3677 50  0000 C CNN
 F 2 "" H 9450 3850 50  0001 C CNN
 F 3 "" H 9450 3850 50  0001 C CNN
@@ -890,4 +873,54 @@ Wire Wire Line
 	14050 1400 14750 1400
 Wire Wire Line
 	14050 1500 14750 1500
+$Comp
+L power:+3.3V #PWR0112
+U 1 1 5C4A0921
+P 7200 3200
+F 0 "#PWR0112" H 7200 3050 50  0001 C CNN
+F 1 "+3.3V" H 7215 3373 50  0000 C CNN
+F 2 "" H 7200 3200 50  0001 C CNN
+F 3 "" H 7200 3200 50  0001 C CNN
+	1    7200 3200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2550 1950 2550 3600
+Wire Wire Line
+	2550 3600 3000 3600
+Wire Wire Line
+	2550 1950 4950 1950
+$Comp
+L Diode:1.5KExxA D3
+U 1 1 5C4A2480
+P 10800 1100
+F 0 "D3" V 10754 1179 50  0000 L CNN
+F 1 "ZMM5V1" V 10845 1179 50  0000 L CNN
+F 2 "Diode_SMD:D_MiniMELF" H 10800 900 50  0001 C CNN
+F 3 "https://www.vishay.com/docs/88301/15ke.pdf" H 10750 1100 50  0001 C CNN
+	1    10800 1100
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR06
+U 1 1 5C4A2487
+P 10800 1250
+F 0 "#PWR06" H 10800 1000 50  0001 C CNN
+F 1 "GND" H 10805 1077 50  0000 C CNN
+F 2 "" H 10800 1250 50  0001 C CNN
+F 3 "" H 10800 1250 50  0001 C CNN
+	1    10800 1250
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR01
+U 1 1 5C4A8DEE
+P 10800 950
+F 0 "#PWR01" H 10800 800 50  0001 C CNN
+F 1 "+5V" H 10815 1123 50  0000 C CNN
+F 2 "" H 10800 950 50  0001 C CNN
+F 3 "" H 10800 950 50  0001 C CNN
+	1    10800 950 
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
