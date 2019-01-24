@@ -21,8 +21,13 @@ power is 5V, the signal always reads low. To work around this, power the relay f
 This workshop includes a cheap relay module which in nominally rated for mains control. It is included for demonstration purposes
 only. If you intend to control hardwired mains devices, please talk to an electrician about suitable switchgear.
 
+# Goals
+This workship will familiarise you with the basic operation of Home Assistant, as well as learning how to create your own 1Wire™
+devices using the STM32 microcontrollers and ARM MBed.
+
 # Set up Home Assistant
-- Identify the IP address of your Orange Pi Prime. Use the number written on the ethernet port of your device to look up the IP address in infrastructure/dhcpd.conf
+- Identify the IP address of your Orange Pi Prime. Use the number written on the ethernet port to identify your machine. Your
+instructor will provide you with further instructions as to how to map this to an IP address.
 - Point a web browser at http://#orange pi IP#:8123. You should be greeted with the Home Assistant user creation screen
 ![Home Assistant User Account Creattion](images/createaccount.png)
 - Create your account, then log in with the account you just created
@@ -61,12 +66,12 @@ This step will not be necessary once [Mikal Still's GPIO patches](https://github
 - In the Addon Store, under Community Hass.IO Addons, install "SSH and Web Terminal"
 - The SSH daemon authenticates via your public key. If you don't have one generated already, build one new with `ssh-keygen`
 - Copy you SSH public key into your clipboard: `cat ~/.ssh/id_rsa.pub` (then copy the output)
-- Add your SSH key to the "authorized_keys" list, and disable the web interface (since you can SSH in directly from your laptop). It is disabled by default on the sdcard we got   
+- Add your SSH key to the "authorized_keys" list, and disable the web interface (since you can SSH in directly from your laptop). It is disabled by default on the sdcard we got
 ![SSH Key config](images/ssh-key.png)
-- Disable the Protection Mode option on the addon (it is already disabled by default)  
+- Disable the Protection Mode option on the addon (it is already disabled by default)
 ![SSH Disable Protection](images/ssh-disable-protection.png)
 - Start the Addon, this takes a little while, you can monitor progress by refreshing the log panel. The server is running when you see
-`Server listening on 0.0.0.0 port 22` in the logs. Note this takes a very long time (2mn or more)  
+`Server listening on 0.0.0.0 port 22` in the logs. Note this takes a very long time (2mn or more)
 - SSH into the machine `ssh hassio@#orange pi IP#`
 - Get a shell in the docker instance of Home Assistant `docker exec -it homeassistant bash`
 ```
@@ -106,7 +111,6 @@ binary_sensor:
    ports:
      PA6: Pushbutton
 ```
-- Check on your OWFS->MQTT Gateway install, if it's still going, wait here before you restart Home Assistant.
 - Save your changes, check the configuration then restart Home Assistant
 - You should now see Relay1 in the list of devices in the overview, and Pushbutton as a sensor at the top of the overview.
 
@@ -118,7 +122,7 @@ Using a pin or other pointy object, carefully lift the locking tabs and remove t
 - Remove power from your machine
 - Plug the unaltered connector into the relay module, using black for ground.
 - Plug the end with the yellow & black pair into PC8 on the GPIO header.
-- Finally, plug the red wire into pin 2 on the Pi header (+3.3V) (bottom left, when the header is facing you)
+- Finally, plug the red wire into pin 1 on the Pi header (+3.3V) (bottom left, when the header is facing you)
 ![Relay Connection](images/relay_connections.jpg)
 - Plug your machine back in after checking carefully that you have the correct pin.
 
