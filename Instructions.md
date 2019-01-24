@@ -7,7 +7,7 @@ Please take a moment to check that you have all the workshop pieces:
 - 433MHz radio modules
 - 2 x 433MHz Antennas
 - SWD Programmer (looks like a USB stick)
-- 16 Channel OneWire SSR/Switch board
+- 16 Channel 1Wire™ SSR/Switch board
 
 Before plugging in, please inspect your Orange Pi Prime. Ensure that the Wifi cable is not inside the board (if it is, carefully
 remove the interface board, disconnect the Wifi cable & reroute it outside) and that the heatsink is not loose.
@@ -179,14 +179,14 @@ change this so we only issue a toggle if the button is pressed.
 - In the "Halt if State" section, select "=", "off". This will halt the flow if msg.payload is "off"
 - Deploy your flow and play with your button
 
-# Playing with 1Wire
-1Wire is a protocol from Dallas Semiconductors (now Maxim), designed for low speed communications over medium distances. It is commonly
+# Playing with 1Wire™
+1Wire™ is a protocol from Dallas Semiconductors (now Maxim), designed for low speed communications over medium distances. It is commonly
 used in home automation for temperature sensing, but since the protocol is relatively simple, I have implemented it in software to
 allow for wired control of many aspects of home automation. I currently have open source designs available for switches (inputs),
 relays (outputs), air conditioning zone control and RGBW LED strips.
 
-In this section, you will configure a gateway to bridge 1Wire devices into Home Assistant, then program an STM32 microcontroller so
-that it enumerates on the 1wire bus and provides remote switching & input capabilities.
+In this section, you will configure a gateway to bridge 1Wire™ devices into Home Assistant, then program an STM32 microcontroller so
+that it enumerates on the 1Wire™ bus and provides remote switching & input capabilities.
 
 ## Enable Mosquitto
 We will be using MQTT to interact with Home Assistant. While Home Assistant includes a cut-down MQTT broker, Mosquitto
@@ -203,13 +203,13 @@ then click on the yellow '+' at the bottom right to create a new user. Use "OneW
 - Navigate to the OWFS->MQTT Gateway page under HassIO (it should be installed by now)
 - enter the username and password for owfs that you created earlier
 - Start the service
-- Go back to your Overview, along the top, you should see a temperature reading, with a device name of "temperature_28.xxxxxx", this is the 1Wire temperature probe on the interface board, located behind the 1Wire RJ45 socket.
+- Go back to your Overview, along the top, you should see a temperature reading, with a device name of "temperature_28.xxxxxx", this is the 1Wire™ temperature probe on the interface board, located behind the 1Wire™ RJ45 socket.
 - To name the device, go to Configuration, Customization, then select your temperature sensor
 - Click the pen next to the name and you can edit this. Call it "OPi Ambient". Ignore the warning that says `It seems that your configuration.yaml doesn't properly include customize.yaml`, I believe it is bogus
 - Go back to the overview and the temperature sensor should now have a meaningful name
 
 ## Program your 16 Channel SSR board
-Included in your kit is a 1Wire board with 16 GPIO brought out to a header. These are configured as 8 ports of 2 channels. The schematics and code are in the onewire-softdevice/devices/16_Channel_SSR_Driver. 
+Included in your kit is a 1Wire™ board with 16 GPIOs brought out to a header. These are configured as 8 ports of 2 channels. The schematics and code are in the onewire-softdevice/devices/16_Channel_SSR_Driver. 
 
 Each channel pair can be configured either as an pair of outputs, a tandem pair of outputs for devices like roller shutters that require
 one relay to open and another to close, a pair of inputs with internal pullup/pulldown resistors with either momentary or toggle
@@ -246,9 +246,9 @@ outputs). Since this workshop does not involve soldering, we will instead patch 
 ![SSR Board Relay Connections](images/ssr_relay_connections.jpg)
 
 ## Bring your SSR board into Home Assistant
-- Using the supplied CAT5 cable, connect one of the daisy chain ports on your SSR board to the 1Wire port on the interface board
+- Using the supplied CAT5 cable, connect one of the daisy chain ports on your SSR board to the 1Wire™ port on the interface board
 - HomeAssistant should automatically recognise the device and create button and switch entities for it
-![1Wire devices detected](images/1wdevs.png)
+![1Wire™ devices detected](images/1wdevs.png)
 - Try toggling the relay (relay_foo_0_0), what do you observe?
 
 This relay module uses an active low signal, so the indicator LED is inverted (this is due to the use of a transistor to control
