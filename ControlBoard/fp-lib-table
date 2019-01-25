@@ -1,4 +1,5 @@
 (fp_lib_table
   (lib (name SMF05C)(type Legacy)(uri ${KIPRJMOD}/libraries/SMF05C.mod)(options "")(descr ""))
   (lib (name InfernoEmbedded)(type KiCad)(uri ${KIPRJMOD}/libraries/InfernoEmbedded.pretty)(options "")(descr ""))
+  (lib (name OrangePiPrime)(type KiCad)(uri ${KIPRJMOD}/libraries/OrangePiPrime.pretty)(options "")(descr ""))
 )

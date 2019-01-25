@@ -48,19 +48,6 @@ Wire Wire Line
 Wire Wire Line
 	2100 1050 2100 950 
 $Comp
-L ControlBoard-rescue:OrangePiPrime-OrangePi J1
-U 1 1 5946954A
-P 1000 3400
-AR Path="/5946954A" Ref="J1"  Part="1" 
-AR Path="/594691E7/5946954A" Ref="J1"  Part="1" 
-F 0 "J1" H 1900 4500 60  0000 C CNN
-F 1 "OrangePiPrime" H 1350 4500 60  0000 C CNN
-F 2 "OrangePi:OrangePiPrime" H 1000 3400 60  0001 C CNN
-F 3 "" H 1000 3400 60  0000 C CNN
-	1    1000 3400
-	1    0    0    -1  
-$EndComp
-$Comp
 L power:+5V #PWR023
 U 1 1 59469660
 P 2300 2400
@@ -302,4 +289,15 @@ Wire Wire Line
 	6050 1250 6200 1250
 Wire Wire Line
 	6200 1250 6200 1150
+$Comp
+L OrangePiPrime:OrangePi_OrangePiPrime J1
+U 1 1 5C5C0884
+P 1000 3400
+F 0 "J1" H 1606 4637 60  0000 C CNN
+F 1 "OrangePi_OrangePiPrime" H 1606 4531 60  0000 C CNN
+F 2 "OrangePiPrime:OrangePiPrime" H 1000 3400 60  0001 C CNN
+F 3 "" H 1000 3400 60  0000 C CNN
+	1    1000 3400
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
