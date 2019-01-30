@@ -12,10 +12,8 @@ Please take a moment to check that you have all the workshop pieces:
 Before plugging in, please inspect your Orange Pi Prime. Ensure that the Wifi cable is not inside the board (if it is, carefully
 remove the interface board, disconnect the Wifi cable & reroute it outside) and that the heatsink is not loose.
 
-# Errata
-- The +3.3V line on the interface board for GPIO headers is actually +5V, but if the relay signal is 3.3V while relay
-power is 5V, the signal always reads low. To work around this, power the relay from the 3.3V line instead.
-- The pushbutton is connected to PC5, which does not have an associated IRQ. We use a jumper to short it to PA6 instead.
+Note that the 1Wire port is *not* ethernet. Connecting an ethernet device to this port will result in 24VDC being injected
+in places that do not conform to 802.3a*, and may cause a failure.
 
 # Disclaimer
 This workshop includes a cheap relay module which in nominally rated for mains control. It is included for demonstration purposes
