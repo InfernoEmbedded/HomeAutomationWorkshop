@@ -121,6 +121,13 @@ Using a pin or other pointy object, carefully lift the locking tabs and remove t
 - Plug the unaltered connector into the relay module, using black for ground.
 - Plug the end with the yellow & black pair into PC8 on the GPIO header.
 - Finally, plug the red wire into pin 1 on the Pi header (+3.3V) (bottom left, when the header is facing you)
+
+![GPIO pinout](images/gpio_pinout.jpg)
+- If you're trying to figure out the GPIO pinout of the Orange Pi Prime, the above image is very useful. It is borrowed from a forum thread at https://forum.armbian.com/topic/7067-orange-pi-pc-how-to-use-gpio-for-push-buttons-tutorial/
+
+![GPIO naming](images/gpio_naming.png)
+- In the case of the relay, what we want to end up with is 3.3 volts, ground and PC8 connected to the relay on the correct pins.
+
 ![Relay Connection](images/relay_connections.jpg)
 - Plug your machine back in after checking carefully that you have the correct pin.
 
