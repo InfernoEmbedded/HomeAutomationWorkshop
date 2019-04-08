@@ -120,6 +120,8 @@ Using a pin or other pointy object, carefully lift the locking tabs and remove t
 - Remove power from your machine
 - Plug the unaltered connector into the relay module, using black for ground.
 - Plug the end with the yellow & black pair into PC8 on the GPIO header.
+
+![GPIO header](images/gpio_header.jpg)
 - Finally, plug the red wire into pin 1 on the Pi header (+3.3V) (bottom left, when the header is facing you)
 ![Relay Connection](images/relay_connections.jpg)
 - Plug your machine back in after checking carefully that you have the correct pin.
